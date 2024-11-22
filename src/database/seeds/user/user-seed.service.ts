@@ -12,7 +12,6 @@ export class UserSeedService {
   ) {}
 
   async run() {
-    console.log('seed runnig ------------------------');
     await this.repository.save(
       this.repository.create({
         id: 1,

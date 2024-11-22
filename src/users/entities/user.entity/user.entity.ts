@@ -1,7 +1,6 @@
 import { AfterLoad, BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 import * as bcrypt from 'bcryptjs';
 import { Role } from 'src/roles/entities/roles.entity';
-import { RoleEnum } from 'src/roles/enum/roles.enum';
 
 @Entity()
 export class User {
