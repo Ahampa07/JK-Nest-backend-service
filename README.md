@@ -106,7 +106,7 @@ AUTH_JWT_TOKEN_EXPIRES_IN=1800
 
 #### Run the migration generate command:
   ```bash
-  yarn migration:generate 
+  yarn migration:generate -- src/database/migrations/CreateNameTable 
   ```
 
 #### Run the migration run command:
@@ -131,5 +131,4 @@ AUTH_JWT_TOKEN_EXPIRES_IN=1800
 ## Tests
 
 ```bash
-# unit tests
 yarn run test
