@@ -1,73 +1,124 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+# JK NestJS Backend Service
 
 ## Description
+This repository contains a backend service built using the NestJS framework. The service includes the following core functionalities:
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- Authentication Module: User registration, login, logout, and role-based authorization using JWT.
+- User Role Management Module: Admin functionality for managing user roles and permissions.
+- Document Management Module: CRUD operations for documents, including the ability to upload and manage files.
+- Ingestion Module: Handles triggerig the ingestion process and manage ongoing ingestion processes.
+
+## Features
+
+1. Authentication
+- User Registration: Create a new account with necessary details.
+- Login/Logout: Secure login and session management.
+- JWT Authentication: Secure token-based authentication with token expiry and role validation.
+2. User Role Management
+- Manage roles such as Admin, Editor, and Viewer.
+- Role-based access control for protected endpoints.
+3. Document Management
+- Create, read, update, and delete documents (.png, .jpg, .jpeg, .gif .pdf).
+- Role-based access control for Document management.
+4. Ingestion Module
+- Supports ingestion process with other backend service 
+- Handle ongoing ingestion process with other backend service.
+
+## API Endpoints
+### Authentication
+- POST /api/auth/email/register: Register a new user.
+- POST /api/auth/email/login: Login and obtain a JWT token.
+- POST /api/auth/user/logout: Logout and invalidate the session.
+
+### User roles Management
+- GET /api/roles/users: Get all users (Admin only).
+- POST /api/roles/create/role: Create a role(Admin only)
+- PATCH /api/roles/users/:id/role: Update user role (Admin only).
+- DELETE /api/roles/users/:id: Delete the user (Admin only).
+
+### Document Management
+- POST /api/documents/upload: Create a document(Admin only).
+- GET /api/documents: Fetch all documents.
+- GET /api/documents/:id: Fetch a document by id.
+- PATCH /api/documents/:id: Update a document.
+- DELETE /api/documents/:id: Delete a document.
+
+
+## Project Structure
+  ```bash
+  src  
+├── auth                    # Authentication module  
+├── config                  # configuration files 
+├── database                # Database configuration   
+├── document-management     # Document management module  
+├── igenstion               # ingestion module
+├── roles                   # user roles handle module   
+├── users                   # User management module 
+├── utils                   # Shared utilities and guards  
+└── main.ts                 # Entry point of the application  
+
+  ```
+## Technologies Used
+- Framework: NestJS
+- Database: PostgreSQL
+- Authentication: JWT
+- Validation: Class-validator
 
 ## Installation
-
+#### Clone the repository:
 ```bash
-$ npm install
+ git clone https://github.com/Ahampa07/JK-Nest-backend-service.git  
+ cd JK-Nest-backend-service  
 ```
 
-## Running the app
+#### Install dependencies:
+  ```bash
+  yarn install  
+  ```
 
+#### Set up environment variables:
+Create a .env file in the root directory and provide the following variables:
 ```bash
-# development
-$ npm run start
+NODE_ENV=development
+APP_PORT=3001
+APP_NAME="JK Tech Nestjs Backend Service "
+API_PREFIX=api
+APP_FALLBACK_LANGUAGE=en
+APP_HEADER_LANGUAGE=x-custom-lang
+FRONTEND_DOMAIN=http://localhost:3000
+BACKEND_DOMAIN=http://localhost:3001
+PYTHON_BACKEND_URL=http://localhost:5000
 
-# watch mode
-$ npm run start:dev
+DATABASE_TYPE=postgres
+DATABASE_HOST=localhost
+DATABASE_PORT=5432
+DATABASE_USERNAME=postgres
+DATABASE_PASSWORD=your-password
+DATABASE_NAME=JKDatabse
+DATABASE_SYNCHRONIZE=true
+DATABASE_MAX_CONNECTIONS=100
+DATABASE_SSL_ENABLED=false
+DATABASE_REJECT_UNAUTHORIZED=false
 
-# production mode
-$ npm run start:prod
+AUTH_JWT_SECRET=secret
+AUTH_JWT_TOKEN_EXPIRES_IN=1800  
 ```
+#### Run the seed command:
+  ```bash
+  yarn run seed:run 
+  ```
 
-## Test
+#### Start the server:
+  ```bash
+  yarn start:dev  
+  ```
+
+## Links
+
+- Swagger: http://localhost:3001/api/docs
+
+## Tests
 
 ```bash
 # unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+yarn run test

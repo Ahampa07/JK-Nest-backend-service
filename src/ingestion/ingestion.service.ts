@@ -6,7 +6,7 @@ import { TriggerIngestionDto } from './dto/trigger-ingestion.dto';
 @Injectable()
 export class IngestionService {
   private readonly pythonBackendBaseUrl =
-    process.env.PYTHON_BACKEND_URL || 'http://python-backend:5000';
+    process.env.PYTHON_BACKEND_URL;
 
   constructor(private readonly httpService: HttpService) {}
 
