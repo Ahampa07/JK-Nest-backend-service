@@ -47,11 +47,9 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   public async logout(
     @CurrentUser() user: User,
-    @Req() req: Request,
-    @Headers() head,
     @Res() res,
   ) {
-    const respData = await this.service.logout(user, req, head);
+    const respData = await this.service.logout(user);
     res.clearCookie('jwt');
     res.send(respData);
   }

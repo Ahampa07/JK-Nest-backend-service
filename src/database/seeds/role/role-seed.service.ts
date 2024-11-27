@@ -22,7 +22,7 @@ export class RoleSeedService {
       await this.repository.save(
         this.repository.create({
           id: RoleEnum.admin,
-          name: 'Admin',
+          name: 'admin',
         }),
       );
     }
@@ -37,7 +37,7 @@ export class RoleSeedService {
       await this.repository.save(
         this.repository.create({
           id: RoleEnum.editor,
-          name: 'Editor',
+          name: 'editor',
         }),
       );
     }
@@ -52,7 +52,7 @@ export class RoleSeedService {
       await this.repository.save(
         this.repository.create({
           id: RoleEnum.viewer,
-          name: 'Viewer',
+          name: 'viewer',
         }),
       );
     }

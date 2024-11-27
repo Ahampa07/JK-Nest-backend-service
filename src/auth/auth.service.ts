@@ -85,28 +85,13 @@ export class AuthService {
     }
   }
 
-  async logout(user: User, req: Request, head: any) {
-    try {
-      const savedUser = await this.usersService.findOne({ id: user.id });
-      if (!savedUser) throw new ForbiddenException('User not found');
-      // savedUser.refresh_token = null;
-      const ip = req.headers['x-real-ip'] || req['connection'].remoteAddress;
-      const platform = head['sec-ch-ua-platform'] || null;
-      const browser = head['sec-ch-ua'] || null;
-
-      // await savedUser.save();
-      return success(
-        {},
-        Message.USER.LOGOUT_SUCCESS,
-        HttpStatus.OK,
-      );
-    } catch (e) {
-      if (e.status) throw new HttpException(e.message, e.status);
-      else
-        throw new HttpException(
-          Message.HTTP.INTERNAL_SERVER_ERROR,
-          HttpStatus.INTERNAL_SERVER_ERROR,
-        );
-    }
+  async logout(user: User) {
+    const savedUser = await this.usersService.findOne({ id: user.id });
+    if (!savedUser) throw new ForbiddenException('User not found');
+    return success(
+      {},
+      Message.USER.LOGOUT_SUCCESS,
+      HttpStatus.OK,
+    );
   }
 }
