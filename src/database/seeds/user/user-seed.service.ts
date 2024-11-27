@@ -12,18 +12,28 @@ export class UserSeedService {
   ) {}
 
   async run() {
-    await this.repository.save(
-      this.repository.create({
-        id: 1,
-        firstName: 'Super',
-        lastName: 'Admin',
-        email: 'admin@example.com',
-        password: 'Admin@123',
+    const countAdmin = await this.repository.count({
+      where: {
         role: {
           id: RoleEnum.admin,
-          name: 'Admin',
         },
-      }),
-    );
+      },
+    });
+
+    if (countAdmin === 0) {
+      await this.repository.save(
+        this.repository.create({
+          id: 1,
+          firstName: 'Super',
+          lastName: 'Admin',
+          email: 'admin@example.com',
+          password: 'Admin@123',
+          role: {
+            id: RoleEnum.admin,
+            name: 'admin',
+          },
+        }),
+      );
+    }
   }
 }

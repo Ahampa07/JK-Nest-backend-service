@@ -42,13 +42,10 @@ export class AuthController {
   @ApiBearerAuth()
   @Roles(RoleEnum.admin, RoleEnum.editor, RoleEnum.viewer)
   @UseGuards(RolesGuard)
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Patch('user/logout')
   @HttpCode(HttpStatus.OK)
-  public async logout(
-    @CurrentUser() user: User,
-    @Res() res,
-  ) {
+  public async logout(@CurrentUser() user: User, @Res() res) {
     const respData = await this.service.logout(user);
     res.clearCookie('jwt');
     res.send(respData);

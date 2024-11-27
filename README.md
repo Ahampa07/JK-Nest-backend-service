@@ -103,9 +103,20 @@ DATABASE_REJECT_UNAUTHORIZED=false
 AUTH_JWT_SECRET=secret
 AUTH_JWT_TOKEN_EXPIRES_IN=1800  
 ```
+
+#### Run the migration generate command:
+  ```bash
+  yarn migration:generate 
+  ```
+
+#### Run the migration run command:
+  ```bash
+  yarn migration:run 
+  ```
+
 #### Run the seed command:
   ```bash
-  yarn run seed:run 
+  yarn seed:run 
   ```
 
 #### Start the server:

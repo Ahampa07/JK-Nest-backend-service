@@ -12,8 +12,6 @@ async function bootstrap() {
 
   const configService = app.get(ConfigService);
 
-  app.use(cookieParser());
-
   const options = new DocumentBuilder()
     .setTitle('JK Tech Nest js API')
     .setDescription('API Docs')
