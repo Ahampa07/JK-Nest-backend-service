@@ -132,3 +132,79 @@ AUTH_JWT_TOKEN_EXPIRES_IN=1800
 
 ```bash
 yarn run test
+```
+## Deploying the Backend Service
+Process of containerizing a NestJS backend service, pushing the image to a container registry, and deploying it on an AWS EC2 instance.
+
+### Dockerfile
+```bash
+FROM node:18 
+
+WORKDIR /usr/src/app
+RUN npm i -g @nestjs/cli typescript ts-node
+
+COPY package*.json ./
+RUN yarn install
+
+COPY . .
+RUN rm -rf .env && cp env-example .env
+RUN yarn run build
+
+EXPOSE 3001
+
+CMD ["yarn", "run", "start:dev"]
+```
+### docker-compose.yml File
+```bash
+services:
+  postgres:
+    image: postgres:15.0
+    ports:
+      - ${DATABASE_PORT}:5432
+    volumes:
+      - ./.data/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+```
+### Build and Tag Docker Image
+```bash
+docker build -t hakamr/nestjs-backend-service:latest .
+```
+### Push Image to Docker Hub or AWS ECR
+```bash
+docker login
+docker push hakamr/nestjs-backend-service:latest
+```
+
+### Deploy on an AWS EC2 Instance
+Launch an EC2 instance and Install Docker:
+```bash
+sudo apt update
+sudo apt install docker.io -y
+sudo systemctl start docker
+sudo systemctl enable docker
+```
+Pull the Docker image
+```bash
+docker pull hakmar/nestjs-backend-service:latest
+```
+Run the container:
+```bash
+docker run -d -p 3001:3001 hakamr/nestjs-backend-service:latest
+```
+Verify Deployment
+Access the service in the browser:
+```bash
+http://<ec2-public-ip>:3001
+```
+
+
